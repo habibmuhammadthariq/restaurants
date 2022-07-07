@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant/data/api/resto_detail_api_service.dart';
 import 'package:restaurant/data/model/restaurant_detail.dart';
+
+import '../data/api/resto_api_service.dart';
 
 enum ResultState { Loading, NoData, HasData, Error }
 
 class RestoDetailProvider extends ChangeNotifier {
-  final RestoDetailApi restoDetailApi;
+  final restoApiService = RestoApiService();
+  final String id;
 
-  RestoDetailProvider({ required this.restoDetailApi }) {
-    _fetchAllRestaurants();
+  RestoDetailProvider({required this.id}) {
+    _fetchRestaurantDetail();
   }
 
   late DetailResto _detailResto;
@@ -19,12 +21,12 @@ class RestoDetailProvider extends ChangeNotifier {
   DetailResto get result => _detailResto;
   ResultState get state => _state;
 
-  Future<dynamic> _fetchAllRestaurants() async {
+  Future<dynamic> _fetchRestaurantDetail() async {
     try {
       _state = ResultState.Loading;
       notifyListeners();
 
-      final detailRestaurant = await restoDetailApi.topHeadlines();
+      final detailRestaurant = await restoApiService.getRestoDetail(id);
       if (detailRestaurant.restaurant.id.isEmpty) {
         _state = ResultState.NoData;
         notifyListeners();
@@ -37,7 +39,7 @@ class RestoDetailProvider extends ChangeNotifier {
     } catch (e) {
       _state = ResultState.Error;
       notifyListeners();
-      return _message = 'Error --> $e';
+      return _message = 'Gagal mendapatkan data';
     }
   }
 }

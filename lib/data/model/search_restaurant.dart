@@ -1,9 +1,5 @@
 import 'dart:convert';
 
-// SearchResto searchRestoFromJson(String str) => SearchResto.fromJson(json.decode(str));
-//
-// String searchRestoToJson(SearchResto data) => json.encode(data.toJson());
-
 class SearchResto {
   SearchResto({
     required this.error,
@@ -20,12 +16,6 @@ class SearchResto {
     founded: json["founded"],
     restaurants: List<Restaurant>.from(json["restaurants"].map((x) => Restaurant.fromJson(x))),
   );
-
-  // Map<String, dynamic> toJson() => {
-  //   "error": error,
-  //   "founded": founded,
-  //   "restaurants": List<dynamic>.from(restaurants.map((x) => x.toJson())),
-  // };
 }
 
 class Restaurant {
@@ -53,13 +43,4 @@ class Restaurant {
     city: json["city"],
     rating: json["rating"].toDouble(),
   );
-
-  // Map<String, dynamic> toJson() => {
-  //   "id": id,
-  //   "name": name,
-  //   "description": description,
-  //   "pictureId": pictureId,
-  //   "city": city,
-  //   "rating": rating,
-  // };
 }

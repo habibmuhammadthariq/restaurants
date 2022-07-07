@@ -10,7 +10,7 @@ class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => RestoSearchProvider(), //---- ---- ----
+      create: (_) => RestoSearchProvider(),
       builder: (context, child) {
         return Scaffold(
             appBar: AppBar(title: Text('Restaurant App')),
@@ -29,7 +29,7 @@ class SearchPage extends StatelessWidget {
                     prefixIcon: Icon(Icons.search),
                   ),
                   onSubmitted: (String value) {
-                    Provider.of<RestoSearchProvider>(context, listen: false).changeSearchString(value);
+                    Provider.of<RestoSearchProvider>(context, listen: false).findRestaurant(value);
                   },
                 ),
                 Expanded(
@@ -73,7 +73,6 @@ class SearchPage extends StatelessWidget {
 
   Widget _buildRestaurantItem(BuildContext context, Restaurant restaurant) {
     return ListTile(
-      // isThreeLine: true,
       contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       leading: Hero(
         tag: 'https://restaurant-api.dicoding.dev/images/small/${restaurant.pictureId}',

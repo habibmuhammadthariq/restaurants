@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant/data/api/resto_search_service.dart';
 
+import '../data/api/resto_api_service.dart';
 import '../data/model/search_restaurant.dart';
 
 enum ResultState { Loading, NoData, HasData, Error }
 
 class RestoSearchProvider extends ChangeNotifier {
-  static var searchApiService = SearchApiService();
+
+  final restoApiService = RestoApiService();
 
   RestoSearchProvider() {
-    // _fetchAllRestaurants();
     _state = ResultState.Loading;
   }
 
-  late String _searchString = '';
+  // late String _searchString = '';
 
   late SearchResto _restoResult;
   late ResultState _state;
@@ -23,12 +23,12 @@ class RestoSearchProvider extends ChangeNotifier {
   SearchResto get result => _restoResult;
   ResultState get state => _state;
 
-  Future<dynamic> _fetchAllRestaurants() async {
+  Future<dynamic> _fetchRestaurantByQuery(String searchString) async {
     try {
       _state = ResultState.Loading;
       notifyListeners();
 
-      final restaurant = await searchApiService.topHeadlines(_searchString);
+      final restaurant = await restoApiService.findResto(searchString);
       if (restaurant.restaurants.isEmpty) {
         _state = ResultState.NoData;
         notifyListeners();
@@ -41,13 +41,13 @@ class RestoSearchProvider extends ChangeNotifier {
     } catch (e) {
       _state = ResultState.Error;
       notifyListeners();
-      return _message = 'Error --> $e';
+      return _message = 'Gagal mendapatkan data ';
     }
   }
 
-  void changeSearchString(String searchString) {
-    _searchString = searchString;
-    _fetchAllRestaurants();
+  void findRestaurant(String searchString) {
+    // _searchString = searchString;
+    _fetchRestaurantByQuery(searchString);
     notifyListeners();
   }
 

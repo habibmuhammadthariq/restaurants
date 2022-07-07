@@ -24,7 +24,7 @@ class RestoProvider extends ChangeNotifier {
       _state = ResultState.Loading;
       notifyListeners();
 
-      final restaurant = await restoApiService.topHeadlines();
+      final restaurant = await restoApiService.getAllResto();
       if (restaurant.restaurants.isEmpty) {
         _state = ResultState.NoData;
         notifyListeners();
@@ -37,7 +37,7 @@ class RestoProvider extends ChangeNotifier {
     } catch (e) {
       _state = ResultState.Error;
       notifyListeners();
-      return _message = 'Error --> $e';
+      return _message = 'Gagal mendapatkan data';
     }
   }
 }
