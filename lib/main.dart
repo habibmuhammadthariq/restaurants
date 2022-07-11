@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant/data/model/restaurant.dart';
+import 'package:restaurant/ui/favorite_page.dart';
 import 'package:restaurant/ui/restaurant_detail_Page.dart';
 import 'package:restaurant/ui/HomePage.dart';
 import 'package:restaurant/data/model/restaurant_detail.dart';
@@ -27,6 +28,9 @@ class MyApp extends StatelessWidget {
             id: ModalRoute.of(context)?.settings.arguments as String
         ),
         SearchPage.routeName: (context) => SearchPage(),
+        FavoritePage.routeName: (context) => FavoritePage(
+          restaurant: ModalRoute.of(context)?.settings.arguments as List<Restaurant>,
+        ),
       },
     );
   }

@@ -14,12 +14,12 @@ class RestaurantDetailPage extends StatelessWidget {
       create: (_) => RestoDetailProvider(id: id),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Restaurant App'),
+          title: const Text('Restaurant App'),
         ),
         body: Consumer<RestoDetailProvider>(
             builder: (context, state, _) {
               if (state.state == ResultState.Loading) {
-                return Center(child: CircularProgressIndicator(),);
+                return const Center(child: CircularProgressIndicator(),);
               } else if (state.state == ResultState.HasData) {
                 return ListView.builder(
                   shrinkWrap: true,
@@ -33,7 +33,7 @@ class RestaurantDetailPage extends StatelessWidget {
               } else if (state.state == ResultState.Error) {
                 return Center(child: Text(state.message),);
               } else {
-                return Center(child: Text(''),);
+                return const Center(child: Text(''),);
               }
             }
         )

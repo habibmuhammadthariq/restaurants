@@ -7,19 +7,21 @@ import 'package:restaurant/ui/restaurant_detail_Page.dart';
 class SearchPage extends StatelessWidget {
   static const routeName = 'search_page';
 
+  const SearchPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => RestoSearchProvider(),
       builder: (context, child) {
         return Scaffold(
-            appBar: AppBar(title: Text('Restaurant App')),
+            appBar: AppBar(title: const Text('Search Restaurant')),
             body: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 TextField(
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(
                             Radius.circular(4.0)
