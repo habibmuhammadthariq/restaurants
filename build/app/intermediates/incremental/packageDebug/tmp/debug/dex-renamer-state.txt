@@ -1,4 +1,0 @@
-#Mon Jul 11 10:04:15 WIB 2022
-base.0=/home/ahmad/StudioProjects/restaurants/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
-renamed.0=classes.dex
-path.0=classes.dex
