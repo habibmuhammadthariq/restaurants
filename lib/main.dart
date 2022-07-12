@@ -1,12 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:restaurant/data/model/restaurant.dart';
 import 'package:restaurant/ui/favorite_page.dart';
 import 'package:restaurant/ui/restaurant_detail_Page.dart';
 import 'package:restaurant/ui/HomePage.dart';
 import 'package:restaurant/data/model/restaurant_detail.dart';
 import 'package:restaurant/ui/search_page.dart';
+import 'package:restaurant/utils/notification_helper.dart';
 
-void main() {
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final NotificationHelper notificationHelper = NotificationHelper();
+
+  await notificationHelper.initNotifications(flutterLocalNotificationsPlugin);
+  notificationHelper.requestIOSPermissions(flutterLocalNotificationsPlugin);
+
   runApp(const MyApp());
 }
 

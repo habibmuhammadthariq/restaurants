@@ -14,7 +14,7 @@ class RestaurantDetailPage extends StatelessWidget {
       create: (_) => RestoDetailProvider(id: id),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Restaurant App'),
+          title: const Text('Restaurant Detail'),
         ),
         body: Consumer<RestoDetailProvider>(
             builder: (context, state, _) {
