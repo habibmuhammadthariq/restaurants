@@ -4,7 +4,6 @@ import 'package:restaurant/data/model/restaurant.dart';
 import 'package:restaurant/ui/favorite_page.dart';
 import 'package:restaurant/ui/restaurant_detail_Page.dart';
 import 'package:restaurant/ui/HomePage.dart';
-import 'package:restaurant/data/model/restaurant_detail.dart';
 import 'package:restaurant/ui/search_page.dart';
 import 'package:restaurant/utils/notification_helper.dart';
 

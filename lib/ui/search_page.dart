@@ -38,7 +38,7 @@ class SearchPage extends StatelessWidget {
                     child: Consumer<RestoSearchProvider>(
                       builder: (context, state, _) {
                         if (state.state == ResultState.Loading) {
-                          return Center(
+                          return const Center(
                             child: Icon(
                               Icons.search_rounded,
                               size: 100,
@@ -90,7 +90,7 @@ class SearchPage extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.location_pin,
                 color: Colors.grey,
                 size: 20,
@@ -100,7 +100,7 @@ class SearchPage extends StatelessWidget {
           ),
           Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.star,
                 color: Colors.grey,
                 size: 20,

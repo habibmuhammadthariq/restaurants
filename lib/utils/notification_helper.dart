@@ -156,6 +156,7 @@ class NotificationHelper {
     final response = await http.get(Uri.parse('${baseUrl}detail/${restoList[_getRandomNumber()]}'));
     DetailResto detailResto = DetailResto.fromJson(jsonDecode(response.body));
 
+    // temp. this should be here as a helper in case i missed something about date
     // tz.initializeTimeZones();
     // var dateTime = tz.TZDateTime.now(tz.local).add(const Duration(minutes: 1));
     // print('Date type format $dateTime');
@@ -198,7 +199,7 @@ class NotificationHelper {
   tz.TZDateTime _nextDate() {
     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
     tz.TZDateTime scheduleDate = tz.TZDateTime(
-      tz.local, now.year, now.month, now.day, 21 // 17 means at 5 pm
+      tz.local, now.year, now.month, now.day, 11 // 11 means at 5 pm
     );
 
     if (scheduleDate.isBefore(now)) {

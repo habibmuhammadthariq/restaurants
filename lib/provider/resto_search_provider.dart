@@ -13,8 +13,6 @@ class RestoSearchProvider extends ChangeNotifier {
     _state = ResultState.Loading;
   }
 
-  // late String _searchString = '';
-
   late SearchResto _restoResult;
   late ResultState _state;
   String _message = '';
@@ -46,7 +44,6 @@ class RestoSearchProvider extends ChangeNotifier {
   }
 
   void findRestaurant(String searchString) {
-    // _searchString = searchString;
     _fetchRestaurantByQuery(searchString);
     notifyListeners();
   }
