@@ -62,7 +62,7 @@ class Restaurant {
     description = map["description"];
     pictureId = map["pictureId"];
     city = map["city"];
-    rating = double.parse(map["rating"]);
+    rating = map["rating"]; //double.parse();
 
   }
 

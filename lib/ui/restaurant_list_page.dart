@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant/data/model/restaurant.dart';
 import 'package:restaurant/provider/resto_provider.dart';
 import 'package:restaurant/ui/favorite_page.dart';
 import 'package:restaurant/ui/restaurant_detail_Page.dart';
 import 'package:restaurant/ui/search_page.dart';
-import 'package:restaurant/utils/notification_helper.dart';
 
 import '../main.dart';
 
 class RestaurantListPage extends StatefulWidget {
-  final NotificationHelper notificationHelper;
   const RestaurantListPage({
     Key? key,
-    required this.notificationHelper,
   }) : super(key: key);
 
   @override
@@ -30,15 +26,6 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
       appBar: AppBar(
         title: const Text('Restaurant List'),
         actions: <Widget>[
-          IconButton(
-              onPressed: () async {
-                await widget.notificationHelper.showNotification(
-                    flutterLocalNotificationsPlugin,
-                  _restaurant[0] // temporary. it should be random restaurant
-                );
-              },
-              icon: const Icon( Icons.alarm,)
-          ),
           IconButton(
               onPressed: () {
                 Navigator.pushNamed(context, FavoritePage.routeName, arguments: _restaurant);

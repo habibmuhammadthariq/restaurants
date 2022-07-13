@@ -1,16 +1,32 @@
+import 'dart:convert';
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:restaurant/data/model/restaurant.dart';
+import 'package:restaurant/data/model/restaurant_detail.dart';
 import 'package:restaurant/utils/receive_notification.dart';
 import 'package:rxdart/rxdart.dart';
+// import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
-import 'package:restaurant/data/model/restaurant.dart';
+import 'package:http/http.dart' as http;
 
 final selectNotificationSubject = BehaviorSubject<String?>();
 final didReceiveLocalNotificationSubject = BehaviorSubject<ReceiveNotification>();
+final List<String> restoList = [
+  "rqdv5juczeskfw1e867", "s1knt6za9kkfw1e867",
+  "w9pga3s2tubkfw1e867", "uewq1zg2zlskfw1e867",
+  "ygewwl55ktckfw1e867", "fnfn8mytkpmkfw1e867",
+  "dwg2wt3is19kfw1e867", "6u9lf7okjh9kfw1e867",
+  "zvf11c0sukfw1e867", "ughslf146iqkfw1e867",
+  "w7jca3irwykfw1e867", "8maika7giinkfw1e867",
+  "e1elb86snf8kfw1e867", "69ahsy71a5gkfw1e867",
+  "ateyf7m737ekfw1e867", "02hfwn4bh8uzkfw1e867",
+  "p06p0wr8eedkfw1e867", "uqzwm2m981kfw1e867",
+  "dy62fuwe6w8kfw1e867", "vfsqv0t48jkfw1e867"
+];
 
 class NotificationHelper {
   static const _channelId = '01';
@@ -135,7 +151,14 @@ class NotificationHelper {
       FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin
       ) async {
 
-    var dateTime = tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5));
+    // get resto detail
+    const String baseUrl = 'https://restaurant-api.dicoding.dev/';
+    final response = await http.get(Uri.parse('${baseUrl}detail/${restoList[_getRandomNumber()]}'));
+    DetailResto detailResto = DetailResto.fromJson(jsonDecode(response.body));
+
+    // tz.initializeTimeZones();
+    // var dateTime = tz.TZDateTime.now(tz.local).add(const Duration(minutes: 1));
+    // print('Date type format $dateTime');
     var vibrationPattern = Int64List(4);
     vibrationPattern[0] = 0;
     vibrationPattern[1] = 1000;
@@ -145,7 +168,7 @@ class NotificationHelper {
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
         _channelId, _channelName,
       channelDescription: _channelDesc,
-      icon: 'secondary_icon',
+      icon: 'app_icon',
       // largeIcon:
       vibrationPattern: vibrationPattern,
       enableLights: true,
@@ -160,15 +183,33 @@ class NotificationHelper {
       iOS: iOSPlatformSpecifics
     );
 
-    await flutterLocalNotificationsPlugin.show(
-    0,
-    'schedule title',
-    'schedule body',
-    // dateTime,
-    platformChannelSpecifics,
-      // uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime
-      payload: 'scheduled notification',
-      // androidAllowWhileIdle: true,
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+      0,
+      detailResto.restaurant.name, //'tes',//
+      detailResto.restaurant.city, //'tes',//
+      _nextDate(),
+      platformChannelSpecifics,
+      payload: detailResto.restaurant.id, // 'tes',//
+      uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+      androidAllowWhileIdle: true,
     );
+  }
+
+  tz.TZDateTime _nextDate() {
+    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+    tz.TZDateTime scheduleDate = tz.TZDateTime(
+      tz.local, now.year, now.month, now.day, 21 // 17 means at 5 pm
+    );
+
+    if (scheduleDate.isBefore(now)) {
+      scheduleDate.add(const Duration(days: 1));
+    }
+
+    return scheduleDate;
+  }
+
+  int _getRandomNumber() {
+    Random random = Random();
+    return random.nextInt(20);
   }
 }
