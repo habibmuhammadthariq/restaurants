@@ -1,15 +1,15 @@
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:restaurant/provider/scheduling_provider.dart';
+import 'package:restaurant/utils/background_service.dart';
 import '../data/model/restaurant.dart';
 import '../main.dart';
-import '../utils/notification_helper.dart';
-
 class SettingsPage extends StatefulWidget {
-  final NotificationHelper notificationHelper;
 
   const SettingsPage({
     Key? key,
-    required this.notificationHelper
   }) : super(key: key);
 
   @override
@@ -17,7 +17,6 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  bool isSwitch = false;
 
   Restaurant restaurant = Restaurant(
       id: "rqdv5juczeskfw1e867",
@@ -39,26 +38,16 @@ class _SettingsPageState extends State<SettingsPage> {
           Material(
             child: ListTile(
               title: const Text('Restaurant Notification'),
-              trailing: Switch.adaptive(
-                  value: isSwitch,
-                  onChanged: (value) async {
-                    setState(() {
-                      isSwitch = value;
-                      print('Saat ini true/ false ? $isSwitch');
-                    });
-
-                    if (isSwitch == true) {
-                      await widget.notificationHelper.scheduleNotification(
-                          flutterLocalNotificationsPlugin,
-                          //restaurant // temporary. it should be random restaurant
-                      );
-                      print('Hidupkan reminder');
-                    } else {
-                      await flutterLocalNotificationsPlugin.cancel(0);
-                      print('Yaah remindernya kok dimatiin gan');
-                    }
-                  },
-              ),
+              trailing: Consumer<SchedullingProvider>(
+                builder: (context, scheduled, _) {
+                  return Switch.adaptive(
+                    value: scheduled.isScheduled,
+                    onChanged: (value) async {
+                      scheduled.scheduledNews(value);
+                    },
+                  );
+                },
+              )
             ),
           )
         ],

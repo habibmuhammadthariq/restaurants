@@ -1,3 +1,4 @@
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:restaurant/data/model/restaurant.dart';
@@ -5,6 +6,7 @@ import 'package:restaurant/ui/favorite_page.dart';
 import 'package:restaurant/ui/restaurant_detail_Page.dart';
 import 'package:restaurant/ui/HomePage.dart';
 import 'package:restaurant/ui/search_page.dart';
+import 'package:restaurant/utils/background_service.dart';
 import 'package:restaurant/utils/notification_helper.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
@@ -12,8 +14,11 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterL
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final NotificationHelper notificationHelper = NotificationHelper();
+  final BackgroundService backgroundService = BackgroundService();
+  backgroundService.initializeIsolate();
+  AndroidAlarmManager.initialize();
 
+  final NotificationHelper notificationHelper = NotificationHelper();
   await notificationHelper.initNotifications(flutterLocalNotificationsPlugin);
   notificationHelper.requestIOSPermissions(flutterLocalNotificationsPlugin);
 

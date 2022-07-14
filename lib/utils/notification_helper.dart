@@ -121,9 +121,13 @@ class NotificationHelper {
   }
 
   Future<void> showNotification(
-      FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin,
-      Restaurant restaurant
+      FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin
       ) async {
+
+    // get resto detail
+    const String baseUrl = 'https://restaurant-api.dicoding.dev/';
+    final response = await http.get(Uri.parse('${baseUrl}detail/${restoList[_getRandomNumber()]}'));
+    DetailResto detailResto = DetailResto.fromJson(jsonDecode(response.body));
 
     var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
         _channelId, _channelName,
@@ -140,10 +144,10 @@ class NotificationHelper {
 
     await flutterLocalNotificationsPlugin.show(
       0,
-      restaurant.name,
-      'Lokasi ${restaurant.city}',
+      detailResto.restaurant.name,
+      'Lokasi ${detailResto.restaurant.city}',
       platformChannelSpecifics,
-      payload: restaurant.id,
+      payload: detailResto.restaurant.id,
     );
   }
 
