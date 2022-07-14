@@ -9,6 +9,7 @@ class RestaurantDetailPage extends StatelessWidget {
   final String id;
   const RestaurantDetailPage({ required this.id });
 
+  @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<RestoDetailProvider>(
       create: (_) => RestoDetailProvider(id: id),
@@ -48,7 +49,7 @@ class RestaurantDetailPage extends StatelessWidget {
           Hero(tag: 'https://restaurant-api.dicoding.dev/images/small/${restaurant.pictureId}',
               child: Image.network('https://restaurant-api.dicoding.dev/images/small/${restaurant.pictureId}')),
           Padding(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -58,10 +59,16 @@ class RestaurantDetailPage extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyText2,
                   ),
                 ),
-                SizedBox(height: 6,),
                 Center(
                   child: Text(
                     'Location : ${restaurant.city}',
+                    style: Theme.of(context).textTheme.bodyText2,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                Center(
+                  child: Text(
+                    'Rating : ${restaurant.rating}',
                     style: Theme.of(context).textTheme.bodyText2,
                     textAlign: TextAlign.center,
                   ),
@@ -74,7 +81,7 @@ class RestaurantDetailPage extends StatelessWidget {
                   restaurant.description,
                   style: Theme.of(context).textTheme.bodyText2,
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Row(
                   children: [
                     Expanded(
@@ -121,7 +128,7 @@ class RestaurantDetailPage extends StatelessWidget {
                     )
                   ],
                 ),
-                SizedBox(height: 8,)
+                const SizedBox(height: 8,)
               ],
             ),)
         ],

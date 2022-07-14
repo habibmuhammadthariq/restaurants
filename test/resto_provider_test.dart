@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:restaurant/data/api/resto_api_service.dart';
 
 void main() {
-  test('Should contain restaurants list when "restaurants" function being called', () async {
+  test('Should contain 20 restaurants when "getAllResto()" function being called', () async {
     // arrange
     RestoApiService restoApiService = RestoApiService();
     // act

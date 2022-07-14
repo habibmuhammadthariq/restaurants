@@ -9,7 +9,7 @@ import 'package:restaurant/data/model/restaurant.dart';
 import 'package:restaurant/data/model/restaurant_detail.dart';
 import 'package:restaurant/utils/receive_notification.dart';
 import 'package:rxdart/rxdart.dart';
-// import 'package:timezone/data/latest_all.dart' as tz;
+import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import 'package:http/http.dart' as http;
 
@@ -197,6 +197,7 @@ class NotificationHelper {
   }
 
   tz.TZDateTime _nextDate() {
+    tz.initializeTimeZones();
     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
     tz.TZDateTime scheduleDate = tz.TZDateTime(
       tz.local, now.year, now.month, now.day, 11 // 11 means at 5 pm
